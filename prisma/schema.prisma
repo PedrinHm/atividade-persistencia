@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,18 +7,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Estudante {
+  id          Int   @id @default(autoincrement())
+  nome String
+  createdAt   DateTime @default(now())
+  images      Image[]
+  CursoEstudante CursoEstudante[]
+}
+
+model Image {
+  id     String @id @default(uuid())
+  path   String
+  Estudante   Estudante   @relation(fields: [idEstudante], references: [id])
+  idEstudante Int
+  createdAt   DateTime @default(now())
+}
+
 model Curso {
   id   Int    @id @default(autoincrement())
   nome String
   CursoEstudante CursoEstudante[]
-}
-
-model Estudante {
-  id             Int              @id @default(autoincrement())
-  nome           String
-  cpf            String
-  Telefone       String
-  CursoEstudante CursoEstudante[]
+  createdAt   DateTime @default(now())
 }
 
 model CursoEstudante {
@@ -30,4 +36,5 @@ model CursoEstudante {
   idCurso     Int
   estudante   Estudante @relation(fields: [idEstudante], references: [id])
   curso       Curso     @relation(fields: [idCurso], references: [id])
+  createdAt   DateTime @default(now())
 }

@@ -1,12 +1,14 @@
-import express from 'express';
-import router from './routes';
+import express from "express";
+import path from "path";
 
+import { router } from "./routes";
+
+const PORT = 4003;
 const app = express();
-const port = 4003;
 
 app.use(express.json());
 app.use(router);
 
-app.listen(port, () => {
-  console.log(`Server Running on PORT ${port}`);
-});
+app.use("/images", express.static(path.join(__dirname, "..", "uploads")));
+
+app.listen(PORT, () => console.log("listening on port " + PORT));
