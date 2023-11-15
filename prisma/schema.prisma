@@ -11,16 +11,7 @@ model Estudante {
   id          Int   @id @default(autoincrement())
   nome String
   createdAt   DateTime @default(now())
-  images      Image[]
   CursoEstudante CursoEstudante[]
-}
-
-model Image {
-  id     String @id @default(uuid())
-  path   String
-  Estudante   Estudante   @relation(fields: [idEstudante], references: [id])
-  idEstudante Int
-  createdAt   DateTime @default(now())
 }
 
 model Curso {
